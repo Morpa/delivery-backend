@@ -5,7 +5,7 @@ interface Payload {
   sub: string;
 }
 
-export async function ensureAuthenticateClient(request: Request, response: Response, next: NextFunction) {
+export async function ensureAuthenticateDeliveryman(request: Request, response: Response, next: NextFunction) {
   const authHeader = request.headers.authorization;
 
   if (!authHeader) {
@@ -15,9 +15,9 @@ export async function ensureAuthenticateClient(request: Request, response: Respo
   const [, token] = authHeader.split(' ');
 
   try {
-    const { sub } = verify(token, `${process.env.JWT_SECRET_CLIENT}`) as Payload;
+    const { sub } = verify(token, `${process.env.JWT_SECRET_DELIVERYMAN}`) as Payload;
 
-    request.id_client = sub;
+    request.id_deliveryman = sub;
 
     return next();
   } catch (error) {
